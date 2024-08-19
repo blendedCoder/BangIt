@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="roomListContent">
+	    <ul>
+	        <li class="header">
+	            <span>숙소명</span>
+	            <span>방이름</span>
+	            <span>방상태</span>
+	            <span>방인원</span>
+	            <span>방가격</span>
+	        </li>
+	    </ul>
+    <div th:if="${placeStatus == T(com.bangIt.blended.domain.enums.PlaceStatus).APPROVED}">
+        <ul>
+            <li th:each="room : ${rooms}" class="room-item">
+                <span th:text="${room.placeName}">숙소명</span>
+                <span th:text="${room.roomName}">방이름</span>
+                <span th:text="${room.roomStatus.koName}">방상태</span>
+                <span th:text="${room.guests}">방인원</span>
+                <span th:text="${#numbers.formatDecimal(room.roomPrice, 0, 'COMMA', 0, 'POINT') + '원'}">방가격</span>
+            </li>
+        </ul>
+    </div>
+    <div th:unless="${placeStatus == T(com.bangIt.blended.domain.enums.PlaceStatus).APPROVED} ">
+        <br><p style="text-align: center;">승인된 숙소만 방 목록을 볼 수 있습니다.</p>
+    </div>
+</div>
+</body>
+</html>

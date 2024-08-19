@@ -3,17 +3,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const reservationInfo = document.querySelector('.reservation-info');
     const noUserSelectedReservation = reservationInfo.querySelector('.no-user-selected');
     const reservationDetails = reservationInfo.querySelector('.reservation-details');
-    
     const placeItems = document.querySelectorAll('.user-item');
-    const roomSaveBtn = document.getElementById('roomSave'); // ID 수정
+    const roomSaveBtn = document.getElementById('roomSave');
     const placeDetails = document.querySelector('.place-details');
     const roomDetails = document.querySelector('.room-details');
+	const roomList = document.getElementById('roomList');
     let selectedPlaceId = null;
 
     placeItems.forEach(item => {
         item.addEventListener('click', function() {
             selectedPlaceId = this.getAttribute('data-place-id');
-            // 숙소 상세 정보 로드
             loadPlaceDetails(selectedPlaceId);
         });
     });
@@ -35,12 +34,38 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.text())
             .then(html => {
                 placeDetails.innerHTML = html;
+				showPlaceDetails(); // 숙소 정보를 클릭할 때 호출
+				loadRoomList(placeId); // 방 목록도 함께 로드
             })
             .catch(error => {
                 console.error('숙소 상세 정보 로드 오류:', error);
                 placeDetails.innerHTML = '<p>숙소 상세 정보를 로드하는 중 오류가 발생했습니다. 다시 시도해주세요.</p>';
             });
     }
+	
+	function loadRoomList(placeId) { // placeStatus 매개변수를 제거
+	    const placeItem = document.querySelector(`.user-item[data-place-id="${placeId}"]`);
+	    const placeStatus = placeItem.getAttribute('data-place-status'); // 내부 변수로 선언
+
+	    fetch(`/partner/roomListHtml?placeId=${placeId}&placeStatus=${placeStatus}`)
+	        .then(response => response.text())
+	        .then(html => {
+	            const roomListContainer = document.getElementById('roomList');
+	            roomListContainer.innerHTML = html;
+
+	            document.querySelector('.reservation-details').style.display = 'block';
+	            document.querySelector('.no-user-selected').style.display = 'none';
+
+	            const roomSaveButton = document.getElementById('roomSave');
+	            if (roomSaveButton) {
+	                roomSaveButton.style.display = placeStatus === 'APPROVED' ? 'block' : 'none';
+	            }
+	        })
+	        .catch(error => {
+	            console.error('방 목록 로드 오류:', error);
+	            document.getElementById('roomList').innerHTML = '<li>방 목록을 로드하는 중 오류가 발생했습니다.</li>';
+	        });
+	}
 
     function loadRoomRegisterForm(placeId) {
         fetch(`/partner/roomRegisterForm?placeId=${placeId}`)
@@ -48,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(html => {
                 roomDetails.innerHTML = html;
                 setupRoomRegisterForm();
+                showRoomDetails(); // 방 등록 폼을 보여줄 때 호출
             })
             .catch(error => {
                 console.error('방 등록 폼 로드 오류:', error);
@@ -68,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(response => {
                     if (response.ok) {
                         alert('방이 성공적으로 등록되었습니다.');
-                        window.location.reload();  // 페이지 새로고침
+                        window.location.reload();
                     } else {
                         alert('방 저장에 실패했습니다.');
                     }
@@ -84,18 +110,24 @@ document.addEventListener('DOMContentLoaded', function() {
     searchResults.addEventListener('click', function(e) {
         const userItem = e.target.closest('.user-item');
         if (userItem) {
-            // 선택된 사용자 강조
             searchResults.querySelectorAll('.user-item').forEach(item => item.classList.remove('selected'));
             userItem.classList.add('selected');
 
-            // 예약 정보 섹션 업데이트
             noUserSelectedReservation.style.display = 'none';
             reservationDetails.style.display = 'block';
 
-            // 콘솔에 로그 추가
             console.log('사용자가 클릭한 항목:', userItem.textContent);
             console.log('예약 정보 및 활동 정보 표시됨');
         }
     });
-});
     
+    function showPlaceDetails() {
+        placeDetails.style.display = 'block';
+        roomDetails.style.display = 'none';
+    }
+
+    function showRoomDetails() {
+        placeDetails.style.display = 'none';
+        roomDetails.style.display = 'block';
+    }
+});

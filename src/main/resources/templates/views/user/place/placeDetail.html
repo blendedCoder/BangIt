@@ -83,33 +83,20 @@
 			</form>
 		</section>
 		<!-- 방 정보 섹션 -->
-		<section class="rooms">
-			<hr />
-			<h2>객실 선택</h2>
-			<!-- 방 1 -->
-			<div class="room">
-				<h3>방 1</h3>
-				<p>방 1은 넓고 밝으며, 더블 침대가 있는 아늑한 공간입니다.</p>
-				<h3>가격: ₩50,000 / 박</h3>
-				<button class="details-btn" onclick="openModal()">상세 정보 보기</button>
-				<button class="reserve-btn">예약하기</button>
-			</div>
-
-			<!-- 방 2 -->
-			<div class="room">
-				<h3>방 2</h3>
-				<p>방 2은 넓고 밝으며, 더블 침대가 있는 아늑한 공간입니다.</p>
-				<h3>가격: ₩70,000 / 박</h3>
-				<button class="details-btn" onclick="openModal()">상세 정보 보기</button>
-				<button class="reserve-btn">예약하기</button>
-			</div>
-
-			<!-- 방 3 -->
-			<div class="room">
-				<h3>방 3</h3>
-				<p>방 3은 스페셜 럭셔리 방입니다. 외벽이 유리창으로 구성되어 있는 지하방이며 바다 내부에서 생활하는 방입니다.</p>
-				<h3>가격: ₩15,000,000 / 박</h3>
-				<button class="details-btn" onclick="openModal()">상세 정보 보기</button>
+		<section class="rooms"
+			th:if="${rooms != null and not #lists.isEmpty(rooms)}">
+			<div th:each="room : ${rooms}" class="room">
+				<h2 th:text="${room.roomName}">방 이름</h2>
+				<p th:text="${room.roomInformation}">방 설명</p>
+				<h3
+					th:text="'가격: ₩' + ${#numbers.formatDecimal(room.roomPrice, 0, 'COMMA', 0, 'POINT')} + ' / 박'">가격</h3>
+				<p th:text="'최대 인원: ' + ${room.guests} + '명'">최대 인원</p>
+				<p th:text="'체크인 시간: ' + ${room.checkInTime}">체크인 시간</p>
+				<p th:text="'체크아웃 시간: ' + ${room.checkOutTime}">체크아웃 시간</p>
+				<h4>환불 정책</h4>
+				<p th:text="${room.refundPolicy}">환불 정책</p>
+				<button class="details-btn"
+					th:onclick="'openModal(' + ${room.id} + ')'">상세 정보 보기</button>
 				<button class="reserve-btn">예약하기</button>
 			</div>
 		</section>

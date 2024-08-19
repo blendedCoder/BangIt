@@ -16,6 +16,7 @@ import com.bangIt.blended.domain.dto.PlaceListDTO;
 import com.bangIt.blended.domain.dto.place.PlaceSaveDTO;
 import com.bangIt.blended.domain.entity.ImageEntity;
 import com.bangIt.blended.domain.entity.PlaceEntity;
+import com.bangIt.blended.domain.enums.PlaceStatus;
 import com.bangIt.blended.domain.repository.ImageEntityRepository;
 import com.bangIt.blended.domain.repository.PlaceEntityRepository;
 import com.bangIt.blended.service.partner.PartnerPlaceService;
@@ -101,6 +102,7 @@ public class PartnerPlaceServiceProcess implements PartnerPlaceService{
                 .themes(dto.getThemes())
                 .latitude(dto.getLatitude())
                 .longitude(dto.getLongitude())
+                .status(PlaceStatus.PENDING_APPROVAL)
                 .build();
     }
 
@@ -123,6 +125,7 @@ public class PartnerPlaceServiceProcess implements PartnerPlaceService{
             .name(entity.getName())
             .type(entity.getType())
             .updatedAt(entity.getUpdatedAt())
+            .status(entity.getStatus())
             .build();
 	}
 
@@ -134,7 +137,7 @@ public class PartnerPlaceServiceProcess implements PartnerPlaceService{
 		
 	}
 
-	//no(pk)해당하는 숙소 DB에서 삭제
+	//no해당하는 숙소 DB에서 삭제
 	@Override
 	public void deleteProcess(long id) {
 		repository.delete(repository.findById(id).orElseThrow());

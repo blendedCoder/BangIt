@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
 	// jQuery UI Datepicker 한국어 설정 및 초기화
-	$.datepicker.setDefaults($.datepicker.regional['ko']);
+/*	$.datepicker.setDefaults($.datepicker.regional['ko']);
 
 	$("#checkin-date").datepicker({
 	    dateFormat: "yy년 MM dd일",
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	$("#checkout-date").datepicker({
 		dateFormat: "yy년 MM dd일",
 		minDate: 1 // 오늘 날짜 이후만 선택 가능
-	});
+	});*/
 
 	// GSAP과 ScrollTrigger 플러그인 로드
 	gsap.registerPlugin(ScrollTrigger);

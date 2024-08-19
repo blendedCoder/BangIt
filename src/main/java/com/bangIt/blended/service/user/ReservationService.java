@@ -10,4 +10,6 @@ public interface ReservationService {
 
 	ReservationDTO getReservationById(Long id);
 
+	Long getLatestReservationId();
+
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bangIt.blended.domain.mapper.PlaceMapper">
+    <select id="findprocess" parameterType="com.bangIt.blended.domain.dto.placesList.SearchPlaceDTO" resultType="com.bangIt.blended.domain.dto.place.PlaceDTO">
+        SELECT DISTINCT p.*
+        FROM place p
+        JOIN room r ON p.id = r.place_id
+        LEFT JOIN reservation res ON r.id = res.room_id
+        WHERE p.region = #{region}
+        AND r.capacity >= #{guestCount}
+        AND NOT EXISTS (
+            SELECT 1
+            FROM reservation res2
+            WHERE res2.room_id = r.id
+            AND res2.reservation_status = 'CONFIRMED'
+            AND (
+                (res2.check_in_date &lt;= #{checkoutDate} AND res2.check_out_date &gt;= #{checkinDate})
+                OR
+                (res2.check_in_date &gt;= #{checkinDate} AND res2.check_in_date &lt; #{checkoutDate})
+            )
+        )
+    </select>
+</mapper>

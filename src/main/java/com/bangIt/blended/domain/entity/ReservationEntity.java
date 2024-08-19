@@ -73,6 +73,8 @@ public class ReservationEntity {
     @OneToOne(mappedBy = "reservation")
     private SaleEntity sale;
 	
+    @Column(nullable = false, unique = true)  // 주문 번호는 고유해야 하므로 unique = true를 추가했습니다.
+    private String orderId;
     
     public ReservationDTO toReservationDTO() {
     	return ReservationDTO.builder()

@@ -15,15 +15,20 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @DynamicUpdate
+@SequenceGenerator(name = "gen_room", sequenceName = "seq_room", initialValue = 1, allocationSize = 1)
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 @Table(name = "room")
 @Getter
 @Entity
@@ -63,9 +68,17 @@ public class RoomEntity {
 	private Long guests;
 
 	// RoomStatus enum (방 상태를 나타내는 열거형)
+	@Getter
+	@RequiredArgsConstructor
 	public enum RoomStatus {
-		AVAILABLE, BOOKED, MAINTENANCE
+		AVAILABLE(1, "이용 가능"), 
+		BOOKED(2, "예약됨"), 
+		MAINTENANCE(3, "유지보수 중");
+
+		private final int number;
+		private final String KoName;
 	}
+	
 	
 	public RoomDTO toRoomDTO() {
 		return RoomDTO.builder()
@@ -75,6 +88,4 @@ public class RoomEntity {
 				.roomPrice(roomPrice)
 				.build();
 	}
-	
-
 }

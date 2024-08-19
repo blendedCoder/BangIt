@@ -8,57 +8,47 @@
 </head>
 <body>
     <main class="cmindex">
-        <section class="contents">
-            <div class="dash user-search">
-                <h2>숙소정보</h2>
-                <div class="search-results">
-                    <ul>
-                        <li class="header">
-                            <span>지역</span>
-                            <span>숙소명</span>
-                            <span>숙소유형</span>
-                            <span>등록일</span>
-                        </li>
-                        <li th:each="place : ${places}" class="user-item" th:data-place-id="${place.id}">
-                            <span th:text="${place.region.KoName}">지역</span>
-                            <span th:text="${place.name}">숙소명</span>
-                            <span th:text="${place.type.KoName}">숙소유형</span>
-                            <span th:text="${place.updatedAt.toLocalDate}">등록일</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+		<section class="contents">
+			<div class="dash user-search">
+				<h2>숙소정보</h2>
+				<div class="search-results">
+					<ul>
+						<li class="header">
+							<span>지역</span> 
+							<span>숙소명</span> 
+							<span>숙소유형</span>
+							<span>등록일</span>
+							<span>상태</span>
+						</li>
+						<li th:each="place : ${places}" class="user-item" th:data-place-id="${place.id}" th:data-place-status="${place.status}">
+							<span th:text="${place.region.KoName}">지역</span> 
+							<span th:text="${place.name}">숙소명</span> 
+							<span th:text="${place.type.KoName}">숙소유형</span> 
+							<span th:text="${place.updatedAt.toLocalDate}">등록일</span>
+							<span th:text="${place.status.koName}">숙소상태</span>
+						</li>
+					</ul>
+				</div>
+			</div>
 
-            <div class="dash user-activity">
-                <h2>숙소 정보</h2>
-                <div class="place-details"></div>
-                <div class="room-details"></div>
-            </div>
+			<div class="dash user-activity">
+				<h2>숙소 정보</h2>
+				<div class="place-details"></div>
+				<div class="room-details"></div>
+			</div>
 
-            <div class="dash reservation-info">
-                <h2>방 목록</h2>
-                <p class="no-user-selected"><i class="fa-solid fa-skull-crossbones"></i><br>방을<br> 등록하세요</p>
-                <div class="reservation-details">
-                    <ul>
-                        <li class="header">
-                            <span>결제일</span>
-                            <span>체크인</span>
-                            <span>체크아웃</span>
-                            <span>숙소명</span>
-                            <span>방</span>
-                        </li>
-                        <li class="user-item">
-                            <span>2024-08-11</span>
-                            <span>2024-08-12</span>
-                            <span>2024-08-13</span>
-                            <span>쁘띠가보네타</span>
-                            <span>력셔리룸</span>
-                        </li>
-                    </ul>
-                    <button id="roomSave" class="room-btn">방 등록</button>
-                </div>
-            </div>
-        </section>
-    </main>
+			<div class="dash reservation-info">
+				<h2>방 목록</h2>
+				<p class="no-user-selected">방을 등록하세요</p>
+				<div class="reservation-details" style="display: none;">
+					<ul id="roomList">
+						<!-- 방 목록이 여기에 동적으로 추가됩니다 -->
+					</ul>
+					<button id="roomSave" class="room-btn">방 등록</button>
+				</div>
+
+			</div>
+		</section>
+	</main>
 </body>
 </html>

@@ -36,65 +36,40 @@
 
 /* 챗봇 영역 */
 #chatbot-container {
-	position: fixed; /* 챗봇을 화면에 고정시킵니다 */
-	z-index: 9999; /* 쌓임 순서 설정, 큰 값으로 설정 */
-	bottom: 100px; /* 화면 하단에서의 거리 */
-	right: 100px; /* 화면 우측에서의 거리 */
-	width: 300px; /* 챗봇 컨테이너의 너비 */
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-	border-radius: 8px; /* 모서리 둥글게 */
-	overflow: hidden; /* 자식 요소가 컨테이너를 넘어서면 숨김 */
-	display: none; /* 기본적으로 숨김 상태 */
-	opacity: 0; /* 초기 상태에서 투명하게 설정 */
-	transform: scale(0.5); /* 초기 상태에서 축소 상태로 설정 */
-	transition: opacity 0.3s ease, transform 0.3s ease; /* 애니메이션 효과 적용 */
+    position: fixed;
+    z-index: 9999;
+    bottom: 100px;
+    right: 100px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    display: none; /* 기본적으로 숨김 상태 */
 }
 
 /* 챗봇 표시 상태 */
 #chatbot-container.visible {
-	display: block; /* 보일 때 표시 */
-	opacity: 1; /* 보일 때 불투명하게 설정 */
-	transform: scale(1); /* 보일 때 원래 크기로 설정 */
+    display: block;
 }
 
 /* 물방울 애니메이션 효과 */
 @keyframes bubble-in {
-	0% {
-		opacity: 0; /* 초기 상태에서 투명하게 설정 */
-		transform: scale(0.5); /* 초기 상태에서 축소 상태로 설정 */
-	}
-	50% {
-		opacity: 0.7; /* 중간 상태에서 불투명도 조정 */
-		transform: scale(1.05); /* 중간 상태에서 약간 확대 */
-	}
-	100% {
-		opacity: 1; /* 최종 상태에서 완전 불투명 */
-		transform: scale(1); /* 최종 상태에서 원래 크기로 설정 */
-	}
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes bubble-out {
-	0% {
-		opacity: 1; /* 초기 상태에서 완전 불투명 */
-		transform: scale(1); /* 초기 상태에서 원래 크기 */
-	}
-	50% {
-		opacity: 0.7; /* 중간 상태에서 불투명도 조정 */
-		transform: scale(1.05); /* 중간 상태에서 약간 확대 */
-	}
-	100% {
-		opacity: 0; /* 최종 상태에서 투명하게 설정 */
-		transform: scale(0.5); /* 최종 상태에서 축소 상태로 설정 */
-	}
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.5); }
 }
 
 /* 애니메이션을 적용할 때 사용할 클래스 */
 #chatbot-container.bubble-in {
-	animation: bubble-in 0.3s forwards; /* 챗봇 열기 애니메이션 */
+    animation: bubble-in 0.3s forwards;
 }
 
 #chatbot-container.bubble-out {
-	animation: bubble-out 0.3s forwards; /* 챗봇 닫기 애니메이션 */
+    animation: bubble-out 0.3s forwards;
 }
 
 /* 챗봇 헤더 */
@@ -114,67 +89,86 @@
 	display: flex; /* flexbox 사용 */
 }
 
-/* 챗봇 메시지 영역 */
+/* 챗봇 메시지 영역 수정 */
 #chatbot-messages {
-	height: auto; /* 메시지 영역의 높이는 자동으로 조절 */
-	padding: 10px; /* 패딩 추가 */
-	overflow-y: auto; /* 세로 방향으로 스크롤 가능하도록 설정 */
-	position: relative; /* 버튼이 메시지 영역 안에 위치하도록 설정 */
+    padding: 15px;
+    overflow-y: auto;
+    height: calc(100% - 60px); /* 헤더와 입력 영역을 제외한 높이 */
+    display: flex;
+    flex-direction: column;
 }
 
-/* 메시지 스타일 */
+/* 메시지 스타일 수정 */
 .message {
-	margin-bottom: 15px; /* 메시지 사이의 여백 */
-	display: flex; /* 메시지를 flexbox로 배치 */
-	align-items: flex-end; /* 메시지 하단 정렬 */
-	position: relative; /* 프로필과 버블을 상대 위치 기준으로 설정 */
-    margin-left: 30px; /* 메시지 사이의 여백 */
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    max-width: 80%; /* 최대 너비 설정 */
 }
 
-/* 챗봇 프로필 이미지 영역 */
-#chatbot-messages .profile {
-    position: absolute; /* 절대 위치 설정 */
-    top: 0; /* 메시지 박스 상단에 위치 */
-    left: -35px; /* 메시지 박스의 왼쪽 상단에서 왼쪽으로 설정 (이미지 크기와 여백 고려) */
-    width: 50px; /* 프로필 이미지 너비 */
-    height: 50px; /* 프로필 이미지 높이 */
+/* 사용자 메시지 정렬 */
+.message.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
 }
 
-
-/* 챗봇 프로필 이미지 스타일 */
-#chatbot-messages .profile img {
-    width: 100%; /* 부모 요소에 맞게 이미지 크기 설정 */
-    height: 100%; /* 부모 요소에 맞게 이미지 크기 설정 */
-    object-fit: cover; /* 이미지 비율 유지하면서 잘림 방지 */
+/* 프로필 이미지 스타일 수정 */
+.message .profile {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 8px;
+    flex-shrink: 0;
 }
 
-/* 챗봇 프로필 이미지 크기 */
-#chatbot-messages > div > div.profile > img {
-	padding: 5px;
-    width: 50px;
-    height: 50px;
+.message .profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-/* 챗봇이 입력한 내용 말풍선 */
+/* 메시지 내용 스타일 */
+.message-content {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 발신자 이름 스타일 */
+.sender {
+    font-size: 0.8em;
+    color: #888;
+    margin-bottom: 4px;
+}
+
+/* 챗봇이 입력한 내용 말풍선 수정 */
 .message.bot .bubble {
-	background-color: var(--trans-sub-color); /* 챗봇 메시지 배경색 */
-	color: var(--font-color); /* 챗봇 메시지 텍스트 색상 */
-	border-radius: 10px; /* 메시지 박스의 모서리 둥글게 */
-	padding: 10px; /* 패딩 추가 */
-	max-width: 70%; /* 메시지 박스 최대 너비 */
-	margin-right: auto; /* 챗봇 메시지를 왼쪽으로 정렬 */
-	margin-left: 20px;
+    background-color: var(--trans-sub-color);
+    color: #333333; /* 글자 색상을 검정에 가깝게 변경 */
+    border-radius: 0 18px 18px 18px;
+    padding: 10px 15px;
+    max-width: 100%;
+    word-wrap: break-word;
+    text-align: left; /* 왼쪽 정렬 */
 }
 
-/* 사용자가 입력한 내용 말풍선 */
+/* 사용자가 입력한 내용 말풍선 수정 */
 .message.user .bubble {
-	background-color: var(--trans-sub-color); /* 사용자 메시지 배경색 */
-	color: var(--font-color); /* 사용자 메시지 텍스트 색상 */
-	border-radius: 20px; /* 메시지 박스의 모서리 둥글게 */
-	padding: 10px; /* 패딩 추가 */
-	max-width: 70%; /* 메시지 박스 최대 너비 */
-	margin-left: auto; /* 사용자 메시지를 오른쪽으로 정렬 */
+    background-color: var(--mian-color);
+    color: white; /* 글자 색상을 흰색으로 유지 */
+    border-radius: 18px 18px 0 18px;
+    padding: 10px 15px;
+    max-width: 100%;
+    word-wrap: break-word;
+    text-align: left; /* 왼쪽 정렬 */
 }
+
+/* 사용자 메시지 정렬 */
+.message.user {
+    justify-content: flex-end;
+}
+
 
 /* 카테고리 출력 영역 */
 #chatbot-categories, #chatbot-subcategories {

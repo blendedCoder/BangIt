@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
 
 import com.bangIt.blended.domain.dto.place.PlaceDetailDTO;
 import com.bangIt.blended.domain.entity.ImageEntity.ImageType;
+import com.bangIt.blended.domain.enums.PlaceStatus;
 import com.bangIt.blended.domain.enums.PlaceTheme;
 import com.bangIt.blended.domain.enums.PlaceType;
 import com.bangIt.blended.domain.enums.Region;
@@ -77,6 +78,10 @@ public class PlaceEntity extends BaseEntity {
 
     @Column
     private Double longitude;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PlaceStatus status;
     
     @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ImageEntity> images;

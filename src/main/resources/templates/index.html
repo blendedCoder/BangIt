@@ -23,45 +23,50 @@
 				<h2>여행 일정 맞춤 검색</h2>
 				<p>당신의 일정을 검색하세요</p>
 				<div class="search-options">
-					<div class="search-item">
-						
-						<div>
-							<p>지역</p>
-							<select id="region-select">
-								<option value="">지역 선택</option>
-								<option value="">서울</option>
-								<option value="">DB값입니다</option>
-							</select>
-						</div>
-					</div>
-					<div class="search-item">
-						<span class="icon">📅</span>
-						<div>
-							<p>체크인 날짜</p>
-							<input type="text" id="checkin-date" class="datepicker" placeholder="날짜 선택">
-						</div>
-					</div>
-					<div class="search-item">
-						<span class="icon">📅</span>
-						<div>
-							<p>체크아웃 날짜</p>
-							<input type="text" id="checkout-date" class="datepicker" placeholder="날짜 선택">
-						</div>
-					</div>
-					<div class="search-item">
-						<span class="icon">👤</span>
-						<div>
-							<p>인원</p>
-							<div class="guest-picker">
-								<button type="button" id="guest-minus">-</button>
-								<input type="text" id="guest-count" value="1" readonly>
-								<button type="button" id="guest-plus">+</button>
+					<form action="/search/places" method="post">
+						<div class="search-item">
+
+							<div>
+								<p>지역</p>
+								<select id="region-select" name="region" required>
+									<option value="">지역 선택</option>		
+									<option
+										th:each="region : ${T(com.bangIt.blended.domain.enums.Region).values()}"
+										th:value="${region.name()}" th:text="${region.koName}" ></option>
+								</select>
 							</div>
 						</div>
-					</div>
-					<div class="search-button">
-						<button type="button">예약하기</button>
-					</div>
+						<div class="search-item">
+							<span class="icon">📅</span>
+							<div>
+								<p>체크인 날짜</p>
+								<input type="date" name="checkinDate" id="checkin-date" class="datepicker"placeholder="날짜 선택" required>
+							</div>
+						</div>
+						<div class="search-item">
+							<span class="icon">📅</span>
+							<div>
+								<p>체크아웃 날짜</p>
+								<input type="date" name="checkoutDate" id="checkout-date" class="datepicker" placeholder="날짜 선택" required>
+							</div>
+						</div>
+						<div class="search-item">
+							<span class="icon">👤</span>
+							<div>
+								<p>인원</p>
+								<div class="guest-picker">
+									<button type="button" id="guest-minus">-</button>
+									<input type="text" name="guest-count" id="guest-count" value="1" readonly required>
+									<button type="button" id="guest-plus">+</button>
+								</div>
+							</div>
+						</div>
+						<div class="search-button">
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+							<button type="submit">예약하기</button>
+						</div>
+
+					</form>
 				</div>
 			</div>
 		</section>

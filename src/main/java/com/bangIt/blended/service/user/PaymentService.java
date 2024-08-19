@@ -9,6 +9,10 @@ public interface PaymentService {
 
 	boolean validatePayment(String paymentKey, String orderId, Long amount);
 
-	void savePaymentInfo(String paymentKey, String orderId, Long amount);
+	void savePaymentInfo(String paymentKey, String reservationId, Long amount);
 
+	Long getAmountByReservationId(Long reservationId);
+
+	//Long getAmountByReservationId(Long reservationId);
+	
 }

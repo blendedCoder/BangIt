@@ -1,49 +1,64 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-	<div th:fragment="roomRegisterForm">
-	    <section class="room-section">
-	        <h2>방 등록하기</h2>
-	        <form action="/partner/roomSave" method="post" enctype="multipart/form-data">
-	            <input type="hidden" name="placeId" th:value="${placeId}">
-	            
-	            <div class="room-group">
-	                <label for="room-name">방 이름:</label>
-	                <input type="text" id="room-name" name="roomName" required>
-	            </div>
-	
-	            <div class="room-group">
-	                <label for="room-information">방 정보:</label>
-	                <textarea id="room-information" name="roomInformation" rows="4" required></textarea>
-	            </div>
-	
-	            <div class="room-group">
-	                <label for="room-price">가격:</label>
-	                <input type="number" id="room-price" name="roomPrice" required>
-	            </div>
-	
-	            <div class="room-group">
-	                <label for="room-status">방 상태:</label>
-	                <select id="room-status" name="roomStatus" required>
-	                    <option value="AVAILABLE">이용 가능</option>
-	                    <option value="OCCUPIED">사용 중</option>
-	                    <option value="MAINTENANCE">유지보수 중</option>
-	                </select>
-	            </div>
-	
-	            <div class="room-group">
-	                <label for="check-in-time">체크인 시간:</label>
-	                <input type="time" id="check-in-time" name="checkInTime" required>
-	            </div>
-	
-	            <div class="room-group">
-	                <label for="check-out-time">체크아웃 시간:</label>
-	                <input type="time" id="check-out-time" name="checkOutTime" required>
-	            </div>
-	
-	            <button id="roomSaveBtn" class="room-btn">방 등록</button>
-	        </form>
-	    </section>
-	</div>
+<div th:fragment="roomRegisterForm">
+  <section class="room-section">
+    <h2>방 등록하기</h2>
+    <form action="/partner/roomSave" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+      <input type="hidden" name="placeId" th:value="${placeId}">
+
+      <div class="room-group">
+        <label for="room-name">방 이름:</label>
+        <input type="text" id="room-name" name="roomName" required>
+      </div>
+
+      <div class="room-group">
+        <label for="room-information">방 정보:</label>
+        <textarea id="room-information" name="roomInformation" rows="4" required></textarea>
+      </div>
+
+      <div class="room-group">
+        <label for="room-price">가격:</label>
+        <div class="price-input-wrapper">
+          <input type="number" id="room-price" name="roomPrice" required>
+          <span class="price-unit">원</span>
+        </div>
+      </div>
+
+      <div class="room-group">
+        <label for="room-status">방 상태:</label>
+        <select id="room-status" name="roomStatus" required>
+          <option value="AVAILABLE">이용 가능</option>
+          <option value="BOOKED">예약됨</option>
+          <option value="MAINTENANCE">유지보수 중</option>
+        </select>
+      </div>
+
+      <div class="room-group">
+        <label for="refund-policy">환불 정책:</label>
+        <textarea id="refund-policy" name="refundPolicy" rows="3" required></textarea>
+      </div>
+
+      <div class="room-group">
+        <label for="check-in-time">체크인 시간:</label>
+        <input type="time" id="check-in-time" name="checkInTime" required>
+      </div>
+
+      <div class="room-group">
+        <label for="check-out-time">체크아웃 시간:</label>
+        <input type="time" id="check-out-time" name="checkOutTime" required>
+      </div>
+
+      <div class="room-group">
+        <label for="guests">최대 수용 인원:</label>
+        <input type="number" id="guests" name="guests" required min="1">
+        <span class="price-unit">명</span>
+      </div>
+
+      <button id="roomSaveBtn" class="room-btn">방 등록</button>
+    </form>
+  </section>
+</div>
 </body>
 </html>

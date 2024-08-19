@@ -2,6 +2,8 @@ package com.bangIt.blended.domain.dto;
 
 import java.time.LocalDateTime;
 
+import com.bangIt.blended.domain.entity.RoomEntity.RoomStatus;
+import com.bangIt.blended.domain.enums.PlaceStatus;
 import com.bangIt.blended.domain.enums.PlaceType;
 import com.bangIt.blended.domain.enums.Region;
 
@@ -17,5 +19,6 @@ public class PlaceListDTO {
 		private String name;
 		private PlaceType type;
 		private LocalDateTime updatedAt;
+		private PlaceStatus status;
 
 }

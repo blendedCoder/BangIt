@@ -38,4 +38,17 @@ public class ReservationServiceProcess implements ReservationService {
 		return null;
 	}
 
+	@Override
+	public Long getLatestReservationId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * @Override public Long getLatestReservationId() { // 가장 최근 예약을 가져오는 로직 (필요에 맞게
+	 * 구현) ReservationEntity latestReservation =
+	 * reservationRepository.findTopByOrderByIdDesc(); return
+	 * latestReservation.getId(); // 혹은 다른 방식으로 reservationId를 가져올 수 있음 }
+	 */
+
 }

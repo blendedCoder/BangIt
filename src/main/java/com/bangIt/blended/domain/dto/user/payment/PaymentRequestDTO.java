@@ -14,14 +14,15 @@ import lombok.Getter;
 @Builder
 public class PaymentRequestDTO {
 
-	 private String orderNo;
-	    private int amount;
-	    private int amountTaxFree;
-	    private String productDesc;
-	    private String apiKey;
-	    private boolean autoExecute;
-	    private String resultCallback;
-	    private String retUrl;
-	    private String retCancelUrl;
+	private String orderNo;
+	private String paymentKey; // 추가된 필드
+	private Long amount;
+	private int amountTaxFree;
+	private String productDesc;
+	private String apiKey;
+	private boolean autoExecute;
+	private String resultCallback;
+	private String retUrl;
+	private String retCancelUrl;
 
 }
