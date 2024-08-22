@@ -29,7 +29,7 @@ public class PlaceListController {
     @GetMapping("/search/places")
     public String searchPlaces(SearchPlaceDTO dto, Model model) {
         placeListService.findPlaceProcess(dto, model);
-        return "/views/user/placeList/placeList";
+        return "views/user/placeList/placeList";
     }
     
     

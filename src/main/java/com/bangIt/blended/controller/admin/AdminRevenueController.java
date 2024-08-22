@@ -39,7 +39,7 @@ public class AdminRevenueController {
 	
 		adminRevenueService.getPartnerRevenue(dto,model);
 		
-		return "/views/admin/revenue/list";
+		return "views/admin/revenue/list";
 	}
 	
 	

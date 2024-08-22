@@ -25,7 +25,7 @@ public class AdminEmployeeController {
 		    }
 		    	
 		adminEmployeeService.getEmployListProcess(model,accessToken);
-		return "/views/admin/employee/list";
+		return "views/admin/employee/list";
 	}
 	
 	
