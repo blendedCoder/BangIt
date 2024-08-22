@@ -59,19 +59,19 @@
 	<div id="layoutWrap">
 
 		<!-- 헤더 -->
-		<th:block th:replace="~{views/common/header :: top}" />
+		<th:block th:replace="~{/views/common/header :: top}" />
 
 		<!-- 메인 콘텐츠 -->
 		<th:block th:replace="${pMain}" />
 
 		<!-- 푸터 -->
-		<th:block th:replace="~{views/common/footer :: bottom}" />
+		<th:block th:replace="~{/views/common/footer :: bottom}" />
 
 		<!-- Chatbot 삽입 -->
-		<th:block th:replace="~{views/chatbot/chatbot :: chatbot}" />
+		<th:block th:replace="~{/views/chatbot/chatbot :: chatbot}" />
 
 		<!--공통 에러 팝업-->
-		<th:block th:replace="~{views/common/error-modal :: errorModal}" />
+		<th:block th:replace="~{/views/common/error-modal :: errorModal}" />
 
 	</div>
 
