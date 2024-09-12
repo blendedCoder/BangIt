@@ -150,49 +150,67 @@
 
 		<!-- 리뷰 섹션 -->
 		<section class="reviews-section">
-			<span class="star-rating">★★★★★</span> <b>4.9</b> <span>(956)명 평가</span> 
-			<br><br>
+			<!-- 리뷰 목록의 첫 번째 항목에서 전체 통계 정보를 가져옵니다 -->
+			<span th:if="${not #lists.isEmpty(reviews)}" class="star-rating"
+				th:text="${'★'.repeat(reviews[0].averageRating.intValue())}">★★★★★</span>
+			<b th:if="${not #lists.isEmpty(reviews)}"
+				th:text="${#numbers.formatDecimal(reviews[0].averageRating, 1, 1)}">4.9</b>
+			<span th:if="${not #lists.isEmpty(reviews)}"
+				th:text="'(' + ${reviews[0].reviewCount} + ')명 평가'"></span> <br>
+			<br>
 			<h3 style="color: #2CAFFE;">리뷰 보기</h3>
+			<button class="details-btn" id="openReviewModal">리뷰 작성</button>
+
+
 			<div class="reviews-container">
-				<div class="review-card">
+				<div th:each="review : ${reviews}" class="review-card">
 					<div class="review-header">
 						<div class="user-info">
-							<strong>김윤석</strong>
-							<div class="star-rating">★★★★★</div>
+							<div class="star-rating">
+								<span th:text="${'★'.repeat(review.rating)}">★★★★★</span> <b
+									th:text="'(' + ${review.rating} + '/5)'"> (5/5)</b>
+							</div>
+							<br>
+							<div>
+								<strong th:text="${review.userName}">사용자 이름</strong>&nbsp; <span
+									th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd')}">작성일</span>
+							</div>
 						</div>
 					</div>
-					<p class="review-content">사장님이 매우 친절했어요. 방도 깔끔하고 만족합니다.</p>
-				</div>
-				<div class="review-card">
-					<div class="review-header">
-						<div class="user-info">
-							<strong>윤민석</strong>
-							<div class="star-rating">★★★★☆</div>
-						</div>
-					</div>
-					<p class="review-content">위치도 좋고 깨끗했어요. 다음에 또 방문하고 싶은 숙소입니다.</p>
-				</div>
-				<div class="review-card">
-					<div class="review-header">
-						<div class="user-info">
-							<strong>전송희</strong>
-							<div class="star-rating">★★★☆☆</div>
-						</div>
-					</div>
-					<p class="review-content">생각보다 별로였어요. 지금 다 하고 놀고 계시는거죠?</p>
-				</div>
-				<div class="review-card">
-					<div class="review-header">
-						<div class="user-info">
-							<strong>이진웅</strong>
-							<div class="star-rating">★★★★☆</div>
-						</div>
-					</div>
-					<p class="review-content">아주 좋은 숙소였습니다! 깨끗하고 편안한 환경에서 즐거운 시간을
-						보냈습니다.</p>
+					<p class="review-content" th:text="${review.content}">리뷰 내용</p>
 				</div>
 			</div>
 		</section>
+
+		<!-- 리뷰 작성 모달 -->
+		<div id="reviewModal" class="review-modal" style="display: none;">
+			<div class="review-modal-content">
+				<h2>리뷰 작성</h2>
+				<form th:action="@{/reviews/create}" method="post" th:object="${newReview}" id="reviewForm">
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> 
+					<input type="hidden" name="placeId" th:value="${placeId}">
+					<div>
+						<label for="rating">별점:</label> 
+						<select th:field="*{rating}">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select> <b>점</b>
+					</div><br>
+					<div>
+						<label for="content">리뷰 내용:</label>
+						<textarea th:field="*{content}" rows="4" cols="50" required="required"></textarea>
+					</div>
+						<div class="review-buttons">
+						<button type="submit" class="reserve-btn">리뷰 저장</button>
+						<button id="cancelReview" type="submit" class="reserve-btn">취소</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
 		<!-- 페이지 하단에 예약 넘기기 폼 -->
 		<form id="reservationForm" action="/reservationSave" method="post" style="display: none;">
 			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> 

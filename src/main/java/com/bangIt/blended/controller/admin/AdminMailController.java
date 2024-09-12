@@ -43,7 +43,7 @@ public class AdminMailController {
 		adminMailService.getMailFolderListProcess(folderId,model,accessToken);
 		
 		
-		return "/views/admin/mail/list";
+		return "views/admin/mail/list";
 	}
 	
 	

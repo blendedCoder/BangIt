@@ -1,7 +1,10 @@
 package com.bangIt.blended.service.user.impl;
 
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -12,9 +15,12 @@ import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.bangIt.blended.common.util.WeatherUtil;
 import com.bangIt.blended.domain.dto.place.PlaceDTO;
 import com.bangIt.blended.domain.dto.placesList.ScrapePlaceDTO;
 import com.bangIt.blended.domain.dto.placesList.SearchPlaceDTO;
+import com.bangIt.blended.domain.dto.placesList.WeatherDTO;
+import com.bangIt.blended.domain.enums.Region;
 import com.bangIt.blended.domain.mapper.PlaceMapper;
 import com.bangIt.blended.service.user.PlaceListService;
 
@@ -27,32 +33,30 @@ import lombok.RequiredArgsConstructor;
 public class PlaceListServiceProcess implements PlaceListService {
 	
 	private final PlaceMapper placeMapper;
+	private final WeatherUtil weatherUtil;
 
 	
 	//일정 검색 서비스 
     @Override
-    public void findPlaceProcess(SearchPlaceDTO dto, Model model) {
+    public void findPlaceProcess(SearchPlaceDTO dto, Model model) throws IOException {
     	    
     	   System.out.println("serchdto: " + dto);
     	    
     	    List<PlaceDTO> places = placeMapper.findprocess(dto);
     	    
+    	    LocalDate checkinDate =dto.getCheckinDate();
+    	    LocalDate checkoutDate =dto.getCheckoutDate();
+    	    Region region = dto.getRegion();
     	    
+    	    List<WeatherDTO> weather = weatherUtil.getWeatherForPeriod(checkinDate, checkoutDate, region);
+    	    
+    	  
     	    model.addAttribute("placeList", places);
     	    model.addAttribute("searchDto", dto);
-    	    System.out.println("places: " + places);
+    	    model.addAttribute("weather", weather);
     }
     
     
-    //디테일 페이지에서 카테고리 검색
-    @Override
-    public void applyFilters(SearchPlaceDTO dto, List<String> accommodationTypes, List<String> themes, Model model) {
-        dto.setAccommodationTypes(accommodationTypes);
-        dto.setThemes(themes);
-        List<PlaceDTO> places = placeMapper.findprocess(dto);
-        model.addAttribute("placeList", places);
-        model.addAttribute("searchDto", dto);
-    }
 
     
     

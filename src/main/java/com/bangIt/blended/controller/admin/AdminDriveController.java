@@ -46,7 +46,7 @@ public class AdminDriveController {
 		adminDriveService.getMyDriveProcess(model, accessToken);
 		adminDriveService.getMyDriveRootFileProcess(model, accessToken);
 		
-		return "/views/admin/drive/list";
+		return "views/admin/drive/list";
 	}
 	
 	//특정 드라이브 파일 다운로드

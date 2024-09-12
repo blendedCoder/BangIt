@@ -41,6 +41,7 @@ public class NaverWorksUtil {
 
     //
     private final RestTemplate restTemplate;
+    
 
     //
     public NaverWorksUtil(RestTemplateBuilder restTemplateBuilder) {

@@ -1,0 +1,90 @@
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background-color: #f7f7f8;
+	margin: 0;
+	padding: 0;
+	color: #333;
+}
+
+.gpt-container {
+	max-width: 800px;
+	margin: 40px auto;
+	margin-top: 100px;
+	padding: 20px;
+	background-color: #ffffff;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: column;
+	height: 80vh;
+}
+
+h1 {
+	color: #333;
+	font-size: 24px;
+	margin-bottom: 20px;
+}
+
+#chatContainer {
+	flex-grow: 1;
+	overflow-y: auto;
+	margin-bottom: 20px;
+	padding: 10px;
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+}
+
+.chat-message {
+	margin-bottom: 20px;
+	padding: 10px;
+	border-radius: 4px;
+	white-space: pre-wrap; /* 추가: 줄바꿈 유지 */
+	word-wrap: break-word; /* 추가: 긴 단어 줄바꿈 */
+}
+
+.chat-message.user {
+	background-color:#ff5a5f;
+	color:  #e6f3ff;
+	align-self: flex-end;
+	margin-left: auto;
+    max-width: 80%; /* 최대 넓이 */
+}
+
+
+.chat-message.assistant {
+	background-color: #f0f0f0;
+	align-self: flex-start;
+    max-width: 80%; /* 최대 넓이 */
+}
+
+.chat-message.error {
+	background-color: #ffe6e6;
+	color: #ff0000;
+}
+
+.input-container {
+	display: flex;
+}
+
+.input-field {
+	flex-grow: 1;
+	padding: 12px;
+	margin-right: 10px;
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+	font-size: 16px;
+}
+.details-btn {
+    background-color: white;
+    color: #ff5a5f;
+    padding: 10px 20px;
+    border-color: #ff5a5f;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.button:hover {
+	background-color: #0d8c6f;
+}

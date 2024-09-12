@@ -7,6 +7,19 @@
 </head>
 <body>
     <main class="place-list">
+    
+<section class="weather-wrap">
+  <ul class="weather">
+    <li class="dash weather-contents" th:if="${weather != null}" th:each="weather : ${weather}">
+      <span th:text="${weather.date}"></span><br>
+      <span th:if="${weather.weather != null}">날씨 : <span th:text="${weather.weather}"></span></span><br th:if="${weather.weather != null}">
+      <span th:if="${weather.temperature != null}">온도 : <span th:text="${weather.temperature}"></span></span><br th:if="${weather.temperature != null}">
+      <span th:if="${weather.maxTemperature != null}">최고기온 : <span th:text="${weather.maxTemperature}"></span></span><br th:if="${weather.maxTemperature != null}">
+      <span th:if="${weather.minTemperature != null}">최저기온 : <span th:text="${weather.minTemperature}"></span></span><br th:if="${weather.minTemperature != null}">
+    </li>
+    <li th:if="${weather == null}">10일 이내의 일정을 조회해보세요. 날씨 예보를 알려드려요.</li>
+  </ul>
+</section>
         <div class="contents-wrap">
         <form id="searchForm" action="/search/places" method="get">
             <section class="search-options-wrap">
@@ -62,6 +75,9 @@
 				</div>
               
             </section>
+            
+
+            
 
             <section class="catagori">
                 

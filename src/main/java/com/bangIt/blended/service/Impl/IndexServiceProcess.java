@@ -1,6 +1,7 @@
 package com.bangIt.blended.service.Impl;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,8 +14,11 @@ import org.springframework.ui.Model;
 import com.bangIt.blended.domain.dto.place.HotelListDTO;
 import com.bangIt.blended.domain.entity.PlaceEntity;
 import com.bangIt.blended.domain.enums.PlaceStatus;
+import com.bangIt.blended.domain.enums.Region;
+import com.bangIt.blended.domain.repository.ActivityLogEntityRepositoty;
 import com.bangIt.blended.domain.repository.PlaceEntityRepository;
 import com.bangIt.blended.service.IndexService;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +27,9 @@ import lombok.RequiredArgsConstructor;
 public class IndexServiceProcess implements IndexService {
 
 	private final PlaceEntityRepository placeRepository;  // PlaceEntityRepository 주입
-
+	private final ActivityLogEntityRepositoty activityLogRepository;
+	
+	
 	@Override
 	public List<HotelListDTO> getLatestHotels() {
 		 // 승인된 최신 호텔 5곳을 생성 날짜 순서로 가져옵니다.
@@ -88,4 +94,39 @@ public class IndexServiceProcess implements IndexService {
 			.limit(4)
 			.collect(Collectors.toList());
 	}
+	
+	
+	@Override
+	public List<HotelListDTO> getRecommendedHotels(Long userId) {
+	    // 사용자의 선호 지역 리스트 가져오기
+	    List<String> preferredRegions = activityLogRepository.findMostSearchedRegionByUserId(userId);
+	    
+	    if (preferredRegions.isEmpty()) {
+	        // 선호 지역이 없는 경우 빈 리스트 반환 또는 기본 로직
+	        return new ArrayList<>();
+	    }
+
+	    // 첫 번째 선호 지역을 사용
+	    String preferredRegionStr = preferredRegions.get(0);
+	    
+	    // 문자열을 Region enum으로 변환
+	    Region preferredRegion;
+	    try {
+	        preferredRegion = Region.valueOf(preferredRegionStr.toUpperCase());
+	    } catch (IllegalArgumentException e) {
+	        // 만약 변환할 수 없는 경우 빈 리스트 반환 또는 기본 로직
+	        return new ArrayList<>();
+	    }
+
+	    // 선호 지역 기반으로 숙소 추천
+	    List<PlaceEntity> recommendedPlaces = placeRepository.findByRegion(preferredRegion);
+
+	    // PlaceEntity를 HotelListDTO로 변환하여 리스트로 반환
+	    return recommendedPlaces.stream()
+	        .map(PlaceEntity::toHotelListDTOWithoutDistance)
+	        .collect(Collectors.toList());
+	}
+
+
+	
 }

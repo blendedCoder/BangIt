@@ -16,9 +16,9 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
 	// Custom OAuth2 User Service와 Authentication Success Handler를 의존성 주입
-	private final CustomOAuth2UserService customOAuth2UserService;
-	private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
-	private final CustomAccessDeniedHandler customAccessDeniedHandler;
+	private final BangItOAuth2UserService bangItOAuth2UserService;
+	private final BangItAuthenticationSuccessHandler bangItAuthenticationSuccessHandler;
+	private final BangItAccessDeniedHandler bangItAccessDeniedHandler;
 	
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -46,9 +46,9 @@ public class SecurityConfig {
 						// 로그인 페이지 경로 설정
 						.loginPage("/login")
 						// 사용자 정보를 가져오는 서비스 설정
-						.userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+						.userInfoEndpoint(userInfo -> userInfo.userService(bangItOAuth2UserService))
 						// 로그인 성공 시 커스텀 성공 핸들러 설정
-						.successHandler(customAuthenticationSuccessHandler))
+						.successHandler(bangItAuthenticationSuccessHandler))
 				// 로그아웃 설정
 				.logout(logout -> logout
 						// 로그아웃 요청 경로 설정
@@ -65,7 +65,7 @@ public class SecurityConfig {
 						.deleteCookies("JSESSIONID").permitAll())
 				// 예외 처리 설정 (403 에러 발생 시 커스텀 핸들러 호출)
 	            .exceptionHandling(exception -> exception
-	                .accessDeniedHandler(customAccessDeniedHandler)
+	                .accessDeniedHandler(bangItAccessDeniedHandler)
 	            );
 		// OAuth2 로그인 필터 전에 커스텀 필터 추가
 		http.addFilterBefore(new SaveOriginalRequestFilter(), OAuth2LoginAuthenticationFilter.class);

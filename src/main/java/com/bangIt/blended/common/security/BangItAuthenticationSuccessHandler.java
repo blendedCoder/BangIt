@@ -16,11 +16,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+public class BangItAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final UserEntityRepository userRepository;
 
-    public CustomAuthenticationSuccessHandler(UserEntityRepository userRepository) {
+    public BangItAuthenticationSuccessHandler(UserEntityRepository userRepository) {
         this.userRepository = userRepository;
     }
 

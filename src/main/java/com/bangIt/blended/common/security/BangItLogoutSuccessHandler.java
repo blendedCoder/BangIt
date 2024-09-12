@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Component
-public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
+public class BangItLogoutSuccessHandler implements LogoutSuccessHandler {
 
     private static final String KAKAO_LOGOUT_URL = "https://kapi.kakao.com/v1/user/logout";
     private static final String KAKAO_LOGOUT_REDIRECT_URL = "https://kauth.kakao.com/oauth/logout";

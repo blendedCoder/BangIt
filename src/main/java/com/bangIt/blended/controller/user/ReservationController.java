@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.bangIt.blended.common.security.CustomUserDetails;
+import com.bangIt.blended.common.security.BangItUserDetails;
 import com.bangIt.blended.domain.dto.reservation.ReservationSaveDTO;
 import com.bangIt.blended.service.user.ReservationService;
 
@@ -23,14 +23,14 @@ public class ReservationController {
 
 	//예약 등록
 	@PostMapping("/reservationSave")
-	public String placeSave(@AuthenticationPrincipal CustomUserDetails userDetails, ReservationSaveDTO dto) {
+	public String placeSave(@AuthenticationPrincipal BangItUserDetails userDetails, ReservationSaveDTO dto) {
         Long reservationId = service.saveProcess(userDetails.getId(), dto);
         return "redirect:/payment?reservationId=" + reservationId;
     }
 	
 	//예약 목록 조회
 	@GetMapping("/reservation")
-	public String reservationList(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+	public String reservationList(@AuthenticationPrincipal BangItUserDetails userDetails, Model model) {
 			service.listProcess(userDetails.getId(), model);
 		return "views/user/reservation/reservationList";
 	}
