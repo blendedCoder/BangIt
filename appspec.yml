@@ -1,25 +1,26 @@
 version: 0.0
-
-os: linux 
-#배포한 파일 위치 지정/ 지정한 폴더가 존재해야함
+os: linux
+#배포한 파일 위치 지정 :  /home/ec2-user/codedeploy/bangIt 디렉토리가 존재해야함
 files:
   - source: /
     destination: /home/ec2-user/codedeploy/bangIt
     overwrite: true
-
-#배포한 파일이 ec2-user권한으로 적용됌
+    
+#배포한 파일이 ec2-user 권한으로 적용됨
 permissions:
   - object: /
     pattern: "**"
     owner: ec2-user
     group: ec2-user
     
-#새로운 애플리케이션 버전이 설치된 후에 실행되는 스크립트
-AfterInstall:
-  - location: scripts/stop.sh
-    timeout: 60
+hooks:
 
-#새로운 애플리케이션 버전이 설치된 후
-ApplicationStart:
-  - location: scripts/start.sh
-    timeout: 60    
+#애플리케이션 파일이 대상 인스턴스에 복사된 후에 실행
+  AfterInstall:
+    - location: scripts/stop.sh
+      timeout: 60
+
+#애플리케이션이 시작될 때 실행
+  ApplicationStart:
+    - location: scripts/start.sh
+      timeout: 60
