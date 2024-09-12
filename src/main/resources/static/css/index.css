@@ -388,7 +388,7 @@ nav a:hover::after {
 }
 
 /********************* 섹션1 **********************************************/
-.hotels {
+.hotels, .recommended-hotels {
     display: flex;
     flex-direction:column;
     justify-content: center;
@@ -419,6 +419,7 @@ nav a:hover::after {
 .hotel-cards {
     display: flex;
     justify-content: space-between;
+    align-items:center;
     width: 100%; /* 부모 요소의 너비를 100%로 설정 */
     height: auto; /* 높이는 자동으로 설정 */
     gap: 20px;
@@ -436,6 +437,14 @@ nav a:hover::after {
     height: 300px;
     border-radius: 8px;
 }
+
+.hotel-name h3 {
+    white-space: nowrap; /* 줄바꿈을 방지합니다 */
+    overflow: hidden; /* 넘치는 텍스트를 숨깁니다 */
+    text-overflow: ellipsis; /* 생략표(...)를 추가합니다 */
+}
+
+
 
 /****************섹션2 ********************************************/
 .profiles-container{

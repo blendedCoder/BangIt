@@ -16,6 +16,8 @@ public interface IndexService {
 
 	List<HotelListDTO> getNearByHotels(double latitude, double longitude);
 
+	List<HotelListDTO> getRecommendedHotels(Long userId);
+
 
 
 }

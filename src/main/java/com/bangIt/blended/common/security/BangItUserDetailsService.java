@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService {
+public class BangItUserDetailsService implements UserDetailsService {
 
     // 의존성 주입: 사용자 정보를 데이터베이스에서 조회하기 위한 UserEntityRepository
     private final UserEntityRepository repository;
@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         System.out.println(">>>>>>>> username :" + email);
         
         // 이메일을 기준으로 사용자를 데이터베이스에서 조회하고, CustomUserDetails로 래핑하여 반환
-        return new CustomUserDetails(
+        return new BangItUserDetails(
             repository.findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email))
         );

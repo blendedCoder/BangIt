@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CustomOAuth2UserService extends DefaultOAuth2UserService {
+public class BangItOAuth2UserService extends DefaultOAuth2UserService {
 
     // 의존성 주입: 사용자 정보와 관련된 레포지토리 및 기타 서비스
     private final UserEntityRepository repository;
@@ -104,7 +104,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .addRole(Role.USER); // 기본 역할(USER) 부여
 
             // 새 사용자를 저장하고 CustomUserDetails로 반환
-            return new CustomUserDetails(repository.save(newUser), attributes);
+            return new BangItUserDetails(repository.save(newUser), attributes);
         } else {
             // 사용자가 존재하는 경우
             UserEntity existingUser = existingUserOptional.get();
@@ -125,7 +125,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             }
 
             // 기존 사용자를 CustomUserDetails로 반환
-            return new CustomUserDetails(existingUser, attributes);
+            return new BangItUserDetails(existingUser, attributes);
         }
     }
 }

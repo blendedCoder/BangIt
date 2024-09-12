@@ -13,7 +13,7 @@ import lombok.Getter;
 // CustomUserDetails 클래스는 Spring Security의 User 클래스와 OAuth2User 인터페이스를 모두 구현함으로써
 // 소셜 로그인 사용자와 일반 사용자를 모두 처리할 수 있도록 구성됩니다.
 @Getter // Lombok 어노테이션을 통해 게터 메서드를 자동으로 생성
-public class CustomUserDetails extends User implements OAuth2User {
+public class BangItUserDetails extends User implements OAuth2User {
 
     private static final long serialVersionUID = 1L;
     
@@ -24,7 +24,7 @@ public class CustomUserDetails extends User implements OAuth2User {
     private Map<String, Object> attributes;
 
     // UserEntity로부터 정보를 받아 사용자 정보 설정
-    public CustomUserDetails(UserEntity entity) {
+    public BangItUserDetails(UserEntity entity) {
         // 부모 클래스 User 생성자를 호출하여 사용자 인증 정보 설정
         super(entity.getEmail(), entity.getPassword(),
               entity.getRoles().stream()
@@ -37,7 +37,7 @@ public class CustomUserDetails extends User implements OAuth2User {
     }
 
     // OAuth2 사용자 정보를 추가로 설정하는 생성자
-    public CustomUserDetails(UserEntity entity, Map<String, Object> attributes) {
+    public BangItUserDetails(UserEntity entity, Map<String, Object> attributes) {
         this(entity); // 기존 생성자를 호출하여 기본 정보 설정
         this.attributes = attributes; // OAuth2 관련 속성을 추가로 설정
     }

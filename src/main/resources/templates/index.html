@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{views/common/layout :: layout(~{::head} ,~{::main} ) }">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:replace="~{views/common/layout :: layout(~{::head} ,~{::main} ) }">
 
 <head>
 	<meta name="_csrf" th:content="${_csrf.token}">
@@ -75,11 +76,13 @@
 		<!-- Category Section -->
 		<section class="category">
 			<form action="/search/places" method="get" class="category-container">
-				 <input type="hidden" name="checkinDate" th:value="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}">
-       			 <input type="hidden" name="checkoutDate" th:value="${#temporals.format(#temporals.createNow().plusDays(1), 'yyyy-MM-dd')}">
-       			 <input type="hidden" name="region"  value="SEOUL">
-        		 <input type="hidden" name="guestCount" value="2">
-			
+				<input type="hidden" name="checkinDate"
+					th:value="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}">
+				<input type="hidden" name="checkoutDate"
+					th:value="${#temporals.format(#temporals.createNow().plusDays(1), 'yyyy-MM-dd')}">
+				<input type="hidden" name="region" value="SEOUL">
+				<input type="hidden" name="guestCount" value="2">
+
 				<div class="category-item">
 					<button type="submit" name="accommodationTypes" value="HOTEL" class="category-item">
 						<img src="/images/hotel-icon.png" alt="호텔/리조트">
@@ -137,6 +140,31 @@
 				</div>
 		</section>
 
+		<!-- Recommended Hotels Section (Visible only to logged-in users) -->
+		<section th:if="${#authorization.expression('isAuthenticated()')}" class="recommended-hotels">
+			<div class="container">
+				<div class="container-text">
+					<h2>사용자 맞춤 추천 숙소</h2>
+					<p>사용자의 검색기록을 토대로 숙소를 추천해 드립니다.</p>
+				</div>
+				<div class="hotel-cards">
+					<!-- recommendedHotels 리스트를 순회하면서 각 호텔 카드를 생성 -->
+					<div th:each="hotel : ${recommendedHotels}" class="hotel-card">
+						<a th:href="@{'/place/detail/' + ${hotel.id}}">
+							<!-- 호텔의 메인 이미지 URL을 사용하여 이미지를 표시 -->
+							<img th:src="${hotel.ImageUrl}" alt="Hotel">
+						</a>
+						<!-- 호텔 이름을 표시 -->
+						<div class="hotel-name">
+							<h3 th:text="${hotel.name}">Hotel Name</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+
 		<!-- Profile Section -->
 		<section class="profiles">
 			<div class="profiles-container">
@@ -165,7 +193,7 @@
 					<p>나를 위한 근사한 휴가, 방잇 프리미엄 숙소</p>
 				</div>
 				<div class="pick-cards">
-					<div th:each="hotel : ${HotelList}" class="pick-card">
+					<div th:each="hotel : ${hotelList}" class="pick-card">
 						<a th:href="@{'/place/detail/'+${hotel.id}}"><img th:src="${hotel.imageUrl}" alt="Pick"></a>
 						<div class="pick-overlay">
 							<h3 th:text="${hotel.name}">호텔 이름</h3>

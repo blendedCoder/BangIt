@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:replace="~{views/common/layout :: layout(~{::head} ,~{::main} ) }">
+<head>
+<meta charset="utf-8" />
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="/js/user/gpt/gptApi.js" defer></script>
+<link rel="stylesheet" href="/css/user/gpt/gptApi.css">
+</head>
+
+<body>
+	<main>
+		<div class="gpt-container">
+			<h1>Ai 맞춤 서비스</h1>
+			<div id="chatContainer"></div>
+			<div class="input-container">
+				<input type="text" class="input-field" id="question"
+					placeholder="질문을 입력해 주세요.">
+				<button class="details-btn" id="askButton">질문</button>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

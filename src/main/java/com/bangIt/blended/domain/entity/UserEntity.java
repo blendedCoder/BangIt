@@ -84,6 +84,9 @@ public class UserEntity {
 	@OneToMany(mappedBy = "seller")
     private List<SaleEntity> sales;
 	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ReviewEntity> reviews;
+	
 	
 	//Role 등록하기 위한 편의메서드
 	public UserEntity addRole(Role role) {

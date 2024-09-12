@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import com.bangIt.blended.domain.entity.PlaceEntity;
 import com.bangIt.blended.domain.entity.UserEntity;
 import com.bangIt.blended.domain.enums.PlaceStatus;
+import com.bangIt.blended.domain.enums.Region;
 
 public interface PlaceEntityRepository extends JpaRepository<PlaceEntity, Long> {
 
@@ -27,5 +28,7 @@ public interface PlaceEntityRepository extends JpaRepository<PlaceEntity, Long> 
     Optional<PlaceEntity> findByIdAndSeller(Long id, UserEntity seller);
 
 	List<PlaceEntity> findTop5ByStatusOrderByCreatedAtDesc(PlaceStatus approved);
+
+	List<PlaceEntity> findByRegion(Region preferredRegion);
 
 }

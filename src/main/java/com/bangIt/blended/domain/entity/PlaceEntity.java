@@ -102,6 +102,9 @@ public class PlaceEntity extends BaseEntity {
     @JoinColumn(name = "seller_id")
     private UserEntity seller;
     
+    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ReviewEntity> reviews;
+    
     public PlaceListDTO toPlaceListDTO() {
         return PlaceListDTO.builder()
             .id(id)

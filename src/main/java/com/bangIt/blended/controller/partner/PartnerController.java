@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.bangIt.blended.common.security.CustomUserDetails;
+import com.bangIt.blended.common.security.BangItUserDetails;
 import com.bangIt.blended.domain.dto.place.PlaceSaveDTO;
 import com.bangIt.blended.domain.dto.place.PlaceUpdateDTO;
 import com.bangIt.blended.service.partner.PartnerPlaceService;
@@ -44,7 +44,7 @@ public class PartnerController {
 	
 	//숙소 등록하기
 	@PostMapping("/placeSave")
-	public String placeSave(@AuthenticationPrincipal CustomUserDetails userDetails, PlaceSaveDTO dto) {
+	public String placeSave(@AuthenticationPrincipal BangItUserDetails userDetails, PlaceSaveDTO dto) {
 		placeService.saveProcess(userDetails.getId(), dto);
 		return "redirect:/partner";
 	}
@@ -58,7 +58,7 @@ public class PartnerController {
 	
 	//숙소 목록 조회
 	@GetMapping("/placeList")
-	public String placeList(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+	public String placeList(@AuthenticationPrincipal BangItUserDetails userDetails, Model model) {
 		placeService.listProcess(userDetails.getId(), model);
 	    return "views/partner/place/placeList";
 	}

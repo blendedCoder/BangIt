@@ -6,7 +6,7 @@ import com.bangIt.blended.domain.entity.UserEntity;
 import com.bangIt.blended.domain.enums.ActivityType;
 import com.bangIt.blended.domain.repository.ActivityLogEntityRepositoty;
 import com.bangIt.blended.domain.repository.UserEntityRepository;
-import com.bangIt.blended.common.security.CustomUserDetails;
+import com.bangIt.blended.common.security.BangItUserDetails;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -84,8 +84,8 @@ public class LogActivityAspect {
         // 현재 보안 컨텍스트에서 인증 정보 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // 인증 정보가 존재하고, 인증되었으며, CustomUserDetails 타입인 경우
-        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof CustomUserDetails) {
-            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof BangItUserDetails) {
+            BangItUserDetails userDetails = (BangItUserDetails) authentication.getPrincipal();
             Long userId = userDetails.getId();
             // 사용자 ID로 데이터베이스에서 사용자 정보 조회
             return userEntityRepository.findById(userId)
