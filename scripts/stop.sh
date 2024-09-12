@@ -3,7 +3,7 @@
 ROOT_DIR="/home/ec2-user/codedeploy/bangIt"
 DEPLOY_LOG="$ROOT_DIR/deploy.log"
 DATE=`date +"[%Y-%m-%d %H:%M:%S]"`
-FILE_NAME="bangIt-*.jar"
+FILE_NAME="bangIt-1.0.0.jar"
 
 #jar파일 PID
 JAR_PID=`ps -ef | grep $FILE_NAME| grep -v grep | awk '{print $2}'`
