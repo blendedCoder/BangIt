@@ -103,7 +103,7 @@ public class BangItOAuth2UserService extends DefaultOAuth2UserService {
                 .build()
                 .addRole(Role.USER); // 기본 역할(USER) 부여
 
-            // 새 사용자를 저장하고 CustomUserDetails로 반환
+            // 새 사용자를 저장하고 BangItUserDetails로 반환
             return new BangItUserDetails(repository.save(newUser), attributes);
         } else {
             // 사용자가 존재하는 경우

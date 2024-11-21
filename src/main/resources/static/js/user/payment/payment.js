@@ -107,9 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         orderName: "예약", // 주문 이름
                         successUrl: `${window.location.origin}/success?reservationId=${reservationId}&paymentMethod=${paymentMethod}`, // 결제 성공 시 리다이렉트할 URL
                         failUrl: `${window.location.origin}/fail?reservationId=${reservationId}&paymentMethod=${paymentMethod}`, // 결제 실패 시 리다이렉트할 URL
-                        customerEmail: "customer123@gmail.com", // 고객 이메일 (임의 값)
-                        customerName: "김토스", // 고객 이름 (임의 값)
-                        customerMobilePhone: "01012341234", // 고객 전화번호 (임의 값)
                     });
 
                     // 결제 요청 후 모달 닫기

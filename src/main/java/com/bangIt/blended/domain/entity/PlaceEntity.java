@@ -241,19 +241,21 @@ public class PlaceEntity extends BaseEntity {
             }
         }
 
-        // 각 방의 최저가 찾기
+        // 각 방의 최저가 찾기 (유효한 가격이 없을 경우 기본값 설정)
         Long minPrice = rooms.stream()
-                .map(RoomEntity::getRoomPrice)
-                .min(Long::compareTo)
-                .orElseThrow(() -> new IllegalArgumentException("No valid room price found."));
+            .map(RoomEntity::getRoomPrice)
+            .filter(price -> price != null) // Null 체크
+            .min(Long::compareTo)
+            .orElse(0L); // 기본값 0L 설정
 
         return HotelListDTO.builder()
-        		.id(id)
-                .name(name)
-                .imageUrl(mainImage)
-                .description(description)
-                .price(minPrice)
-                .build();
+            .id(id)
+            .name(name)
+            .imageUrl(mainImage)
+            .description(description)
+            .price(minPrice)
+            .build();
     }
+
 
 }
